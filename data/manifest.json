@@ -1,0 +1,18 @@
+{
+  "targets": {
+    "GJ 3929 b": "Real JWST MIRI observations",
+    "LHS 1140 b": "Simulated JWST MIRI observations"
+  },
+  "expected_content": {
+    "GJ 3929 b": [
+      "time",
+      "flux",
+      "flux_err"
+    ],
+    "LHS 1140 b": [
+      "time",
+      "flux",
+      "flux_err"
+    ]
+  }
+}
