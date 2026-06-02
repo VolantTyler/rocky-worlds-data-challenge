@@ -4,11 +4,15 @@
 Build a reproducible, science-focused analysis pipeline for the Rocky Worlds DDT challenge that ingests photometry data, validates data quality, produces exploratory diagnostics, fits baseline and probabilistic models, and exports interpretable results.
 
 ## Current Status (as of 2026-05-25)
-- Phase 1 scaffold exists:
+- Phase 1 scaffold is implemented:
   - Data directory initialization
   - Optional Kaggle CLI download
   - CSV/FITS loading and preview
   - Basic dependency checks
+  - Deterministic raw inventory generation
+  - Validation report generation
+- Raw challenge files are not present yet; Kaggle download currently requires local authentication.
+- Dashboard scaffold lives in `dashboard/` for cloud-friendly UI iteration.
 
 ## Roadmap
 
@@ -16,8 +20,8 @@ Build a reproducible, science-focused analysis pipeline for the Rocky Worlds DDT
 - [x] Initialize standard data folders (`data/raw`, `data/processed`, `data/figures`)
 - [x] Maintain manifest of expected targets/content
 - [x] Add flexible CSV/FITS column mapping for `time`, `flux`, `flux_err`
-- [ ] Add explicit data validation report (nulls, ranges, units, cadence)
-- [ ] Add deterministic raw data inventory (`inventory.csv`)
+- [x] Add explicit data validation report (nulls, ranges, units, cadence)
+- [x] Add deterministic raw data inventory (`inventory.csv`)
 
 ### Phase 2 — Data QA & Preprocessing (Planned)
 - [ ] Implement preprocessing module:
@@ -52,6 +56,13 @@ Build a reproducible, science-focused analysis pipeline for the Rocky Worlds DDT
 - [ ] Build reproducible run command(s) for end-to-end execution
 - [ ] Generate final figures and concise result summary
 - [ ] Add environment lockfile and usage documentation
+- [ ] Export dashboard-ready summary JSON from processed pipeline outputs
+
+### Phase 7 — Dashboard Integration (In Progress)
+- [x] Keep the React/Tailwind dashboard in the same repository as the pipeline
+- [x] Use committed mock JSON so cloud threads can edit the UI without Kaggle credentials
+- [ ] Replace mock dashboard data with generated pipeline summary artifacts
+- [ ] Add deployment notes once the dashboard target is chosen
 
 ## Deliverables
 1. Reproducible scripts/notebooks for ingestion-to-results
@@ -64,4 +75,3 @@ Build a reproducible, science-focused analysis pipeline for the Rocky Worlds DDT
 - Weekly planning checkpoint in `DECISIONS.md`
 - Update progress checkboxes at end of each working session
 - Record scope changes and rationale before implementation
-

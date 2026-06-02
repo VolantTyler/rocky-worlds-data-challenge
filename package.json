@@ -1,0 +1,10 @@
+{
+  "name": "rocky-worlds-data-challenge",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dashboard:dev": "npm --prefix dashboard run dev",
+    "dashboard:build": "npm --prefix dashboard run build",
+    "dashboard:preview": "npm --prefix dashboard run preview"
+  }
+}

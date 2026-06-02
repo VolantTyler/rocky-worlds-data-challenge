@@ -1,0 +1,13 @@
+.venv/
+.kaggle/
+__pycache__/
+data/.runtime/
+dashboard/dist/
+dashboard/node_modules/
+node_modules/
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/figures/*
+!data/figures/.gitkeep

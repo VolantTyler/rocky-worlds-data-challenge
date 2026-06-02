@@ -14,5 +14,11 @@
       "flux",
       "flux_err"
     ]
+  },
+  "directories": {
+    "raw": "data/raw",
+    "processed": "data/processed",
+    "figures": "data/figures",
+    "reports": "data/reports"
   }
 }

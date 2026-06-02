@@ -1,0 +1,139 @@
+{
+  "challenge": {
+    "name": "Rocky Worlds DDT Data Challenge",
+    "mode": "static mock presentation layer",
+    "dataReleaseContext": "JWST/MIRI F1500W 15 μm time-series photometry for secondary-eclipse analysis",
+    "submissionSchemaVersion": "mock-kaggle-rwddt-2026.1",
+    "submissionNotes": [
+      "Each target record exposes a depth_ecl posterior distribution field with at least 10,000 samples.",
+      "Median eclipse depth, mid-eclipse time T0, residual-flux variance, and uncertainty fields are separated for readability.",
+      "Values are realistic mock values for UI scaffolding and are not scientific measurements."
+    ]
+  },
+  "targets": [
+    {
+      "id": "gj3929b",
+      "name": "GJ 3929 b",
+      "targetRole": "Real observation target",
+      "datasetType": "Public JWST observation",
+      "hostStar": "GJ 3929",
+      "planetClass": "Hot terrestrial super-Earth",
+      "observation": {
+        "facility": "JWST",
+        "instrument": "MIRI",
+        "bandpass": "F1500W / 15 μm",
+        "observationType": "Photometric time-series secondary eclipse",
+        "detectorMode": "Time-series imaging",
+        "eclipseIdentifier": "ecl003",
+        "cadenceSeconds": 5.5,
+        "integrationCount": 6240
+      },
+      "targetProperties": {
+        "orbitalPeriodDays": 2.61627,
+        "planetRadiusEarth": 1.15,
+        "planetMassEarth": 1.75,
+        "equilibriumTemperatureK": 565,
+        "stellarEffectiveTemperatureK": 3360,
+        "stellarRadiusSolar": 0.31
+      },
+      "metrics": {
+        "posteriorDistribution": {
+          "targetField": "depth_ecl",
+          "units": "ppm",
+          "minimumRequiredSamples": 10000,
+          "sampleCount": 12000,
+          "arrayParameterization": {
+            "generator": "mock-normal-with-asymmetric-tail",
+            "meanPpm": 74.6,
+            "sigmaPpm": 18.9,
+            "tailSkew": 0.08,
+            "seed": 392903
+          },
+          "credibleIntervalPpm": {
+            "p16": 55.1,
+            "p50": 73.8,
+            "p84": 94.4
+          }
+        },
+        "medianEclipseDepthPpm": 73.8,
+        "eclipseDepthUncertaintyPpm": 19.6,
+        "midEclipseTime": {
+          "field": "T_0",
+          "bjdTdb": 2460884.73142,
+          "uncertaintyDays": 0.00037
+        },
+        "detrendedResidualFluxVariance": {
+          "valuePpmSquared": 3364,
+          "uncertaintyPpmSquared": 290,
+          "rmsPpm": 58.0
+        },
+        "modelFitQuality": {
+          "reducedChiSquared": 1.04,
+          "baselineModel": "quadratic time + detector centroid decorrelation"
+        }
+      }
+    },
+    {
+      "id": "lhs1140b",
+      "name": "LHS 1140 b",
+      "targetRole": "Simulated challenge target",
+      "datasetType": "Synthetic future-like JWST observation",
+      "hostStar": "LHS 1140",
+      "planetClass": "Temperate rocky super-Earth",
+      "observation": {
+        "facility": "JWST",
+        "instrument": "MIRI",
+        "bandpass": "F1500W / 15 μm",
+        "observationType": "Photometric time-series secondary eclipse",
+        "detectorMode": "Time-series imaging",
+        "eclipseIdentifier": "sim-ecl001",
+        "cadenceSeconds": 8.8,
+        "integrationCount": 7120
+      },
+      "targetProperties": {
+        "orbitalPeriodDays": 24.73696,
+        "planetRadiusEarth": 1.73,
+        "planetMassEarth": 5.6,
+        "equilibriumTemperatureK": 230,
+        "stellarEffectiveTemperatureK": 3216,
+        "stellarRadiusSolar": 0.21
+      },
+      "metrics": {
+        "posteriorDistribution": {
+          "targetField": "depth_ecl",
+          "units": "ppm",
+          "minimumRequiredSamples": 10000,
+          "sampleCount": 16000,
+          "arrayParameterization": {
+            "generator": "mock-student-t-low-snr",
+            "locationPpm": 22.4,
+            "scalePpm": 14.2,
+            "degreesOfFreedom": 7,
+            "seed": 114001
+          },
+          "credibleIntervalPpm": {
+            "p16": 7.6,
+            "p50": 21.9,
+            "p84": 37.1
+          }
+        },
+        "medianEclipseDepthPpm": 21.9,
+        "eclipseDepthUncertaintyPpm": 14.8,
+        "midEclipseTime": {
+          "field": "T_0",
+          "bjdTdb": 2460917.18409,
+          "uncertaintyDays": 0.00091
+        },
+        "detrendedResidualFluxVariance": {
+          "valuePpmSquared": 6084,
+          "uncertaintyPpmSquared": 520,
+          "rmsPpm": 78.0
+        },
+        "modelFitQuality": {
+          "reducedChiSquared": 1.11,
+          "baselineModel": "linear time + common-mode systematic template"
+        }
+      }
+    }
+  ]
+}
