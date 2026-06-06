@@ -5,6 +5,9 @@
   "scripts": {
     "dashboard:dev": "npm --prefix dashboard run dev",
     "dashboard:build": "npm --prefix dashboard run build",
-    "dashboard:preview": "npm --prefix dashboard run preview"
+    "dashboard:preview": "npm --prefix dashboard run preview",
+    "video:studio": "npm --prefix video run studio",
+    "video:build": "npm --prefix video run build",
+    "video:still": "npm --prefix video run still"
   }
 }
