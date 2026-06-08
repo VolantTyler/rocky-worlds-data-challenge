@@ -23,6 +23,43 @@ const scenes = [
   { start: 720, end: 900 },
 ];
 
+// Light curve configuration constants
+const LIGHT_CURVE_CONFIG = {
+  POINT_COUNT: 74,
+  POINT_SPACING: 12,
+  START_X: 20,
+  BASE_Y: 98,
+  WAVE_FREQ_PRIMARY: 0.53,
+  WAVE_FREQ_SECONDARY: 0.17,
+  WAVE_AMPLITUDE_PRIMARY: 10,
+  WAVE_AMPLITUDE_SECONDARY: 7,
+  ECLIPSE_START_INDEX: 34,
+  ECLIPSE_END_INDEX: 47,
+  ECLIPSE_DEPTH: 54,
+  ANIMATION_START_FRAME: 190,
+  ANIMATION_END_FRAME: 290,
+  ECLIPSE_HIGHLIGHT_START: 250,
+  ECLIPSE_HIGHLIGHT_END: 295,
+};
+
+// Grid line configuration
+const GRID_CONFIG = {
+  LINE_COUNT: 4,
+  START_X: 20,
+  END_X: 900,
+  START_Y: 46,
+  SPACING: 48,
+};
+
+// Eclipse window configuration
+const ECLIPSE_WINDOW = {
+  X: 430,
+  Y: 62,
+  WIDTH: 138,
+  HEIGHT: 116,
+  RADIUS: 20,
+};
+
 function seconds(frame, fps) {
   return frame / fps;
 }
@@ -44,9 +81,11 @@ function FadeScene({ start, end, children }) {
   return <AbsoluteFill style={{ opacity }}>{children}</AbsoluteFill>;
 }
 
+const STAR_COUNT = 88; // Optimized for visual density at 1920x1080
+
 function Starfield() {
   const frame = useCurrentFrame();
-  const stars = Array.from({ length: 88 }, (_, index) => {
+  const stars = Array.from({ length: STAR_COUNT }, (_, index) => {
     const x = (index * 131 + 43) % 1920;
     const y = (index * 89 + 71) % 1080;
     const size = 1 + ((index * 17) % 4);
@@ -95,14 +134,33 @@ function OrbitalSystem() {
 
 function LightCurve({ compact = false }) {
   const frame = useCurrentFrame();
-  const progress = interpolate(frame, [190, 290], [0, 1], clamp);
-  const points = Array.from({ length: 74 }, (_, index) => {
-    const x = 20 + index * 12;
-    const wave = Math.sin(index * 0.53) * 10 + Math.cos(index * 0.17) * 7;
-    const eclipse = index > 34 && index < 47 ? 54 : 0;
-    const y = 98 + wave + eclipse;
-    return `${x},${y}`;
-  }).join(" ");
+  const progress = interpolate(
+    frame,
+    [LIGHT_CURVE_CONFIG.ANIMATION_START_FRAME, LIGHT_CURVE_CONFIG.ANIMATION_END_FRAME],
+    [0, 1],
+    clamp
+  );
+
+  // Memoize points calculation - light curve data is static
+  const points = React.useMemo(() => {
+    const coords = [];
+    for (let i = 0; i < LIGHT_CURVE_CONFIG.POINT_COUNT; i++) {
+      const x = LIGHT_CURVE_CONFIG.START_X + i * LIGHT_CURVE_CONFIG.POINT_SPACING;
+      const wave =
+        Math.sin(i * LIGHT_CURVE_CONFIG.WAVE_FREQ_PRIMARY) *
+          LIGHT_CURVE_CONFIG.WAVE_AMPLITUDE_PRIMARY +
+        Math.cos(i * LIGHT_CURVE_CONFIG.WAVE_FREQ_SECONDARY) *
+          LIGHT_CURVE_CONFIG.WAVE_AMPLITUDE_SECONDARY;
+      const eclipse =
+        i > LIGHT_CURVE_CONFIG.ECLIPSE_START_INDEX &&
+        i < LIGHT_CURVE_CONFIG.ECLIPSE_END_INDEX
+          ? LIGHT_CURVE_CONFIG.ECLIPSE_DEPTH
+          : 0;
+      const y = LIGHT_CURVE_CONFIG.BASE_Y + wave + eclipse;
+      coords.push(`${x},${y}`);
+    }
+    return coords.join(" ");
+  }, []);
 
   return (
     <div className={compact ? "chart-card compact-chart" : "chart-card"}>
@@ -118,13 +176,13 @@ function LightCurve({ compact = false }) {
             <stop offset="100%" stopColor="#fb7185" />
           </linearGradient>
         </defs>
-        {[0, 1, 2, 3].map((line) => (
+        {Array.from({ length: GRID_CONFIG.LINE_COUNT }, (_, i) => (
           <line
-            key={line}
-            x1="20"
-            x2="900"
-            y1={46 + line * 48}
-            y2={46 + line * 48}
+            key={i}
+            x1={GRID_CONFIG.START_X}
+            x2={GRID_CONFIG.END_X}
+            y1={GRID_CONFIG.START_Y + i * GRID_CONFIG.SPACING}
+            y2={GRID_CONFIG.START_Y + i * GRID_CONFIG.SPACING}
             className="grid-line"
           />
         ))}
@@ -141,13 +199,20 @@ function LightCurve({ compact = false }) {
           }}
         />
         <rect
-          x="430"
-          y="62"
-          width="138"
-          height="116"
-          rx="20"
+          x={ECLIPSE_WINDOW.X}
+          y={ECLIPSE_WINDOW.Y}
+          width={ECLIPSE_WINDOW.WIDTH}
+          height={ECLIPSE_WINDOW.HEIGHT}
+          rx={ECLIPSE_WINDOW.RADIUS}
           className="eclipse-window"
-          style={{ opacity: interpolate(frame, [250, 295], [0, 1], clamp) }}
+          style={{
+            opacity: interpolate(
+              frame,
+              [LIGHT_CURVE_CONFIG.ECLIPSE_HIGHLIGHT_START, LIGHT_CURVE_CONFIG.ECLIPSE_HIGHLIGHT_END],
+              [0, 1],
+              clamp
+            ),
+          }}
         />
       </svg>
     </div>

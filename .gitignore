@@ -4,10 +4,15 @@ __pycache__/
 data/.runtime/
 dashboard/dist/
 dashboard/node_modules/
+video/node_modules/
 node_modules/
 data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+video/out/
 data/figures/*
 !data/figures/.gitkeep
+
+.DS_Store
+**/.DS_Store
