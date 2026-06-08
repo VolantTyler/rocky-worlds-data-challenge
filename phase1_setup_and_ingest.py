@@ -8,9 +8,9 @@ This script:
    time/flux/flux_err-like columns.
 
 Usage:
-  python phase1_setup_and_ingest.py --init
-  python phase1_setup_and_ingest.py --download
-  python phase1_setup_and_ingest.py --scan
+  python3 phase1_setup_and_ingest.py --init
+  python3 phase1_setup_and_ingest.py --download
+  python3 phase1_setup_and_ingest.py --scan
 """
 
 from __future__ import annotations
@@ -80,11 +80,14 @@ def run_kaggle_download() -> None:
     """Download challenge files with Kaggle CLI into data/raw.
 
     Requires:
-    - `kaggle` CLI installed
+    - `kaggle` CLI installed (for example, `python3 -m pip install kaggle`)
     - ~/.kaggle/kaggle.json configured
     """
     if not kaggle_available():
-        raise RuntimeError("Kaggle CLI not found. Install via `pip install kaggle`.")
+        raise RuntimeError(
+            "Kaggle CLI not found. Install via `python3 -m pip install kaggle` "
+            "or `python3 -m pip install -r requirements.txt`."
+        )
 
     cmd = [
         "kaggle",
